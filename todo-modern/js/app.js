@@ -14,16 +14,15 @@ import 'todomvc-common';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {QueryRenderer} from 'react-relay/compat';
-import RelayClassic from 'react-relay/classic'
+import {QueryRenderer} from 'react-relay';
+import environment from './environment';
 import TodoApp from './components/TodoApp';
-import TodoList from './components/TodoList';
 
 const mountNode = document.getElementById('root');
 
 ReactDOM.render(
   <QueryRenderer
-    environment={RelayClassic.Store}
+    environment={environment}
     query={graphql`
       query appQuery ($status: String) {
         viewer {
