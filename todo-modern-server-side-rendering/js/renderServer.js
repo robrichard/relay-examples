@@ -9,7 +9,7 @@ import React from 'react';
 import {graphql} from 'react-relay/compat';
 import {renderToString, } from 'react-dom/server';
 import getRelayEnvironment from './getRelayEnvironment';
-import RelayStaticDataRenderer from './components/RelayStaticDataRenderer';
+import ReactRelayLookupRenderer from './components/ReactRelayLookupRenderer';
 import TodoApp from './components/TodoApp';
 import rootQuery from './root';
 
@@ -27,9 +27,9 @@ export default function (req, res, next) {
     operation,
     onCompleted: () => {
       const renderedComponent = renderToString(
-        <RelayStaticDataRenderer
-          fragment={operation.fragment}
+        <ReactRelayLookupRenderer
           environment={environment}
+          query={rootQuery}
           variables={variables}
           render={({props}) => <TodoApp viewer={props.viewer}/>}
         />
