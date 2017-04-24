@@ -8,8 +8,8 @@ import {
 } from 'relay-runtime';
 import network from './network';
 
-export default function getRelayEnvironment() {
-  const source = new RecordSource();
+export default function getRelayEnvironment(records) {
+  const source = new RecordSource(records);
   const store = new Store(source);
 
   // Create a network layer from the fetch function

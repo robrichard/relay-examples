@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-class RenderRelayWithData extends Component {
+class RelayStaticDataRenderer extends Component {
   render() {
     const {fragment, environment, render} = this.props;
     const snapshot = environment.lookup(fragment);
@@ -19,15 +19,15 @@ class RenderRelayWithData extends Component {
   }
 }
 
-RenderRelayWithData.propTypes = {
+RelayStaticDataRenderer.propTypes = {
   fragment: PropTypes.object.isRequired,
   environment: PropTypes.object.isRequired,
   render: PropTypes.func.isRequired,
   variables: PropTypes.object,
 };
 
-RenderRelayWithData.childContextTypes = {
+RelayStaticDataRenderer.childContextTypes = {
   relay: PropTypes.object
 };
 
-export default RenderRelayWithData;
+export default RelayStaticDataRenderer;

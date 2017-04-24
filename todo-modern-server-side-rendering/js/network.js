@@ -11,9 +11,9 @@ function fetchQuery(
   cacheConfig
 ) {
 
-  if (cacheConfig.payload) {
-    return Promise.resolve(cacheConfig.payload);
-  }
+  // if (cacheConfig.payload) {
+  //   return Promise.resolve(cacheConfig.payload);
+  // }
 
   // console.log('making request', operation.text);
   return fetch('http://localhost:3000/graphql', {
@@ -28,9 +28,9 @@ function fetchQuery(
   }).then(response => {
     return response.json();
   }).then(payload => {
-    if (cacheConfig && typeof cacheConfig.savePayload === 'function') {
-      cacheConfig.savePayload(payload);
-    }
+    // if (cacheConfig && typeof cacheConfig.savePayload === 'function') {
+    //   cacheConfig.savePayload(payload);
+    // }
 
     return payload
   });

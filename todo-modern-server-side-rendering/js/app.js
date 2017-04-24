@@ -15,16 +15,17 @@ import 'todomvc-common';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {QueryRenderer} from 'react-relay';
+import ReactRelayLookupRenderer from './components/ReactRelayLookupRenderer';
 import getRelayEnvironment from './getRelayEnvironment';
 import TodoApp from './components/TodoApp';
 import rootQuery from './root';
 
 const mountNode = document.getElementById('root');
+const environment = getRelayEnvironment(window.records);
 
 ReactDOM.render(
-  <QueryRenderer
-    environment={getRelayEnvironment()}
-    cacheConfig={{payload: window.payload}}
+  <ReactRelayLookupRenderer
+    environment={environment}
     query={rootQuery}
     variables={{status: null}}
     render={({error, props}) => {
@@ -37,3 +38,6 @@ ReactDOM.render(
   />,
   mountNode
 );
+
+
+window.getRelayEnvironment = getRelayEnvironment;

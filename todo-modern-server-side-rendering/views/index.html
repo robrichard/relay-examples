@@ -13,7 +13,7 @@
       // Force `fetch` polyfill to workaround Chrome not displaying request body
       // in developer tools for the native `fetch`.
       self.fetch = null;
-      self.payload = {{payload | safe}}
+      self.records = {{records | safe}}
     </script>
     <script src="http://localhost:3000/webpack-dev-server.js"></script>
     <script src="js/app.js"></script>

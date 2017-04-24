@@ -9,15 +9,13 @@ import React from 'react';
 import {graphql} from 'react-relay/compat';
 import {renderToString, } from 'react-dom/server';
 import getRelayEnvironment from './getRelayEnvironment';
-import RenderRelayWithData from './components/RenderRelayWithData';
+import RelayStaticDataRenderer from './components/RelayStaticDataRenderer';
 import TodoApp from './components/TodoApp';
 import rootQuery from './root';
 
 const variables = {status: null};
 
 export default function (req, res, next) {
-  let payload;
-
   const environment = getRelayEnvironment();
   const operation = createOperationSelector(
     getOperation(rootQuery),
@@ -26,16 +24,10 @@ export default function (req, res, next) {
 
   environment.retain(operation.root);
   environment.sendQuery({
-    cacheConfig: {
-      serverRenderKey: 'rootQuery',
-      savePayload: p => {
-        payload = p;
-      }
-    },
     operation,
     onCompleted: () => {
       const renderedComponent = renderToString(
-        <RenderRelayWithData
+        <RelayStaticDataRenderer
           fragment={operation.fragment}
           environment={environment}
           variables={variables}
@@ -46,7 +38,7 @@ export default function (req, res, next) {
 
       res.send(nunjucks.render('index.html', {
         renderedComponent: renderedComponent,
-        payload: JSON.stringify(payload)
+        records: JSON.stringify(environment.getStore().getSource())
       }));
     },
     onError: e => {

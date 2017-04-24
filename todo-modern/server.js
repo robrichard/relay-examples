@@ -40,6 +40,7 @@ const compiler = webpack({
     ],
   },
   output: {filename: 'app.js', path: '/'},
+  devtool: 'source-map'
 });
 const app = new WebpackDevServer(compiler, {
   contentBase: '/public/',
