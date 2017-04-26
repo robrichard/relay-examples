@@ -17,7 +17,7 @@ import TodoTextInput from './TodoTextInput';
 
 import React from 'react';
 import {
-  createFragmentContainer,
+  createRefetchContainer,
   graphql,
 } from 'react-relay';
 
@@ -38,6 +38,18 @@ class TodoApp extends React.Component {
             <h1>
               todos
             </h1>
+            <div>
+              <button
+                onClick={() => {
+                  this.props.relay.refetch({myString: 'b'})
+                }}
+              >
+                use b
+              </button>
+            </div>
+            <div>
+              doubler: {this.props.viewer.doubler}
+            </div>
             <TodoTextInput
               autoFocus={true}
               className="new-todo"
@@ -71,13 +83,24 @@ class TodoApp extends React.Component {
   }
 }
 
-export default createFragmentContainer(TodoApp, {
-  viewer: graphql`
-    fragment TodoApp_viewer on User {
-      id,
-      totalCount,
-      ...TodoListFooter_viewer,
-      ...TodoList_viewer,
+export default createRefetchContainer(
+  TodoApp,
+  {
+    viewer: graphql`
+      fragment TodoApp_viewer on User {
+        id,
+        totalCount,
+        doubler(val: $myString)
+        ...TodoListFooter_viewer,
+        ...TodoList_viewer,
+      }
+    `,
+  },
+  graphql`
+    query TodoAppQuery ($myString: String!) {
+      viewer {
+        ...TodoApp_viewer
+      }
     }
-  `,
-});
+  `
+);

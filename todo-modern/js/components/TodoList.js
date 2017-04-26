@@ -43,6 +43,9 @@ class TodoList extends React.Component {
     const numCompletedTodos = this.props.viewer.completedCount;
     return (
       <section className="main">
+        <div>
+          tripler: {this.props.viewer.tripler}
+        </div>
         <input
           checked={numTodos === numCompletedTodos}
           className="toggle-all"
@@ -77,6 +80,7 @@ export default createFragmentContainer(TodoList, {
       id,
       totalCount,
       completedCount,
+      tripler(val: $myString)
       ...Todo_viewer,
     }
   `,

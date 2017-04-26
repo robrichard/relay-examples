@@ -116,6 +116,20 @@ const GraphQLUser = new GraphQLObjectType({
       type: GraphQLInt,
       resolve: () => getTodos('completed').length,
     },
+    doubler: {
+      type: GraphQLString,
+      args: {
+        val: {type: new GraphQLNonNull(GraphQLString)}
+      },
+      resolve: (root, {val}) => val + val
+    },
+    tripler: {
+      type: GraphQLString,
+      args: {
+        val: {type: new GraphQLNonNull(GraphQLString)}
+      },
+      resolve: (root, {val}) => val + val + val
+    }
   },
   interfaces: [nodeInterface],
 });
