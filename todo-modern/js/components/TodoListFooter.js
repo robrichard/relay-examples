@@ -16,7 +16,7 @@ import React from 'react';
 import {
   graphql,
   createFragmentContainer,
-} from 'react-relay';
+} from 'react-relay/compat';
 
 class TodoListFooter extends React.Component {
   _handleRemoveCompletedTodosClick = () => {

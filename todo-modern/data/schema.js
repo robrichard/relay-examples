@@ -121,7 +121,7 @@ const GraphQLUser = new GraphQLObjectType({
 });
 
 const Query = new GraphQLObjectType({
-  name: 'Query',
+  name: 'NotQuery',
   fields: {
     viewer: {
       type: GraphQLUser,
@@ -264,7 +264,7 @@ const GraphQLRenameTodoMutation = mutationWithClientMutationId({
 });
 
 const Mutation = new GraphQLObjectType({
-  name: 'Mutation',
+  name: 'NotMutation',
   fields: {
     addTodo: GraphQLAddTodoMutation,
     changeTodoStatus: GraphQLChangeTodoStatusMutation,

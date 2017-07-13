@@ -13,7 +13,7 @@
 import {
   commitMutation,
   graphql,
-} from 'react-relay';
+} from 'react-relay/compat';
 import {ConnectionHandler} from 'relay-runtime';
 
 const mutation = graphql`

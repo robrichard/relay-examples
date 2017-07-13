@@ -18,7 +18,8 @@ import ReactDOM from 'react-dom';
 import {
   QueryRenderer,
   graphql,
-} from 'react-relay';
+} from 'react-relay/compat';
+import Relay from 'react-relay/classic';
 import {
   Environment,
   Network,
@@ -55,7 +56,7 @@ const modernEnvironment = new Environment({
 
 ReactDOM.render(
   <QueryRenderer
-    environment={modernEnvironment}
+    environment={Relay.Store}
     query={graphql`
       query appQuery {
         viewer {

@@ -13,7 +13,7 @@
 import {
   commitMutation,
   graphql,
-} from 'react-relay';
+} from 'react-relay/compat';
 
 const mutation = graphql`
   mutation MarkAllTodosMutation($input: MarkAllTodosInput!) {

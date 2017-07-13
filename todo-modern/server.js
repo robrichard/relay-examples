@@ -33,12 +33,13 @@ const compiler = webpack({
   module: {
     loaders: [
       {
-        exclude: /node_modules/,
+        exclude: /node_modules|dist/,
         loader: 'babel-loader',
         test: /\.js$/,
       },
     ],
   },
+  devtool: 'source-map',
   output: {filename: 'app.js', path: '/'},
 });
 const app = new WebpackDevServer(compiler, {

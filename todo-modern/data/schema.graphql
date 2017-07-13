@@ -1,3 +1,8 @@
+schema {
+  query: NotQuery
+  mutation: NotMutation
+}
+
 input AddTodoInput {
   text: String!
   clientMutationId: String
@@ -32,7 +37,13 @@ type MarkAllTodosPayload {
   clientMutationId: String
 }
 
-type Mutation {
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+type NotMutation {
   addTodo(input: AddTodoInput!): AddTodoPayload
   changeTodoStatus(input: ChangeTodoStatusInput!): ChangeTodoStatusPayload
   markAllTodos(input: MarkAllTodosInput!): MarkAllTodosPayload
@@ -41,10 +52,14 @@ type Mutation {
   renameTodo(input: RenameTodoInput!): RenameTodoPayload
 }
 
-# An object with an ID
-interface Node {
-  # The id of the object.
-  id: ID!
+type NotQuery {
+  viewer: User
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
 }
 
 # Information about pagination in a connection.
@@ -60,16 +75,6 @@ type PageInfo {
 
   # When paginating forwards, the cursor to continue.
   endCursor: String
-}
-
-type Query {
-  viewer: User
-
-  # Fetches an object given its ID
-  node(
-    # The ID of an object
-    id: ID!
-  ): Node
 }
 
 input RemoveCompletedTodosInput {
