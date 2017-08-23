@@ -39,6 +39,13 @@ const compiler = webpack({
       },
     ],
   },
+  resolve: {
+    alias: {
+      'react': path.join(__dirname, 'node_modules/react'),
+      'react-dom': path.join(__dirname, 'node_modules/react-dom'),
+    }
+  },
+  devtool: 'source-map',
   output: {filename: 'app.js', path: '/'},
 });
 const app = new WebpackDevServer(compiler, {
