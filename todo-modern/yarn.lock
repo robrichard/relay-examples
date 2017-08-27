@@ -427,9 +427,9 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-relay@1.2.0-rc.1:
-  version "1.2.0-rc.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-1.2.0-rc.1.tgz#040cc6493ea540fb0e7230c3298ea32168c08105"
+babel-plugin-relay@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-1.2.0.tgz#876da7d4306c7c7d7db460d4ae68ab3f929788d3"
   dependencies:
     babel-runtime "^6.23.0"
     babel-types "^6.23.0"
@@ -3288,15 +3288,15 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-relay@1.2.0-rc.1:
-  version "1.2.0-rc.1"
-  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-1.2.0-rc.1.tgz#e60112be68f19586310dbe950f7f34db275664df"
+react-relay@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-1.2.0.tgz#82ade555f787d6309eacb1fac0c14c3b0c61c4c5"
   dependencies:
     babel-runtime "^6.23.0"
     fbjs "^0.8.1"
     prop-types "^15.5.8"
     react-static-container "^1.0.1"
-    relay-runtime "1.2.0-rc.1"
+    relay-runtime "1.2.0"
 
 react-static-container@^1.0.1:
   version "1.0.1"
@@ -3428,6 +3428,13 @@ relay-compiler@1.2.0-rc.1:
     relay-runtime "1.2.0-rc.1"
     signedsource "^1.0.0"
     yargs "^7.0.2"
+
+relay-runtime@1.2.0, relay-runtime@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-1.2.0.tgz#d2ed002c9accaa2f1dfdb96f02d0dcd0b40c4376"
+  dependencies:
+    babel-runtime "^6.23.0"
+    fbjs "^0.8.1"
 
 relay-runtime@1.2.0-rc.1:
   version "1.2.0-rc.1"

@@ -27,6 +27,7 @@ import {
 } from 'relay-runtime';
 
 import TodoApp from './components/TodoApp';
+import MyOtherTodoApp from './a/TodoApp';
 
 const mountNode = document.getElementById('root');
 
@@ -60,13 +61,19 @@ ReactDOM.render(
       query appQuery {
         viewer {
           ...TodoApp_viewer
+          ...MyOtherTodoApp_viewer @import(from: "./a/TodoApp" name: "TodoApp_viewer")
         }
       }
     `}
     variables={{}}
     render={({error, props}) => {
       if (props) {
-        return <TodoApp viewer={props.viewer} />;
+        return (
+          <div>
+            <TodoApp viewer={props.viewer} />;
+            <MyOtherTodoApp viewer={props.viewer} />;
+          </div>
+        );
       } else {
         return <div>Loading</div>;
       }
