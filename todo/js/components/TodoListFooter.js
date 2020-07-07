@@ -73,16 +73,16 @@ export default createFragmentContainer(TodoListFooter, {
       id
       userId
       completedCount
-      todos(
-        first: 2147483647 # max GraphQLInt
-      ) @connection(key: "TodoList_todos") {
-        edges {
-          node {
-            id
-            complete
-          }
-        }
-      }
+      # todos(
+      #   first: 2147483647 # max GraphQLInt
+      # ) @connection(key: "TodoList_todos") {
+      #   edges {
+      #     node {
+      #       id
+      #       complete
+      #     }
+      #   }
+      # }
       totalCount
     }
   `,

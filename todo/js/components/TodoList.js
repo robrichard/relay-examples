@@ -17,6 +17,7 @@ import Todo from './Todo';
 import React from 'react';
 import {createFragmentContainer, graphql, type RelayProp} from 'react-relay';
 import type {TodoList_user} from 'relay/TodoList_user.graphql';
+import {useFragment} from 'react-relay/hooks';
 type Todos = $NonMaybeType<$ElementType<TodoList_user, 'todos'>>;
 type Edges = $NonMaybeType<$ElementType<Todos, 'edges'>>;
 type Edge = $NonMaybeType<$ElementType<Edges, number>>;
@@ -27,11 +28,31 @@ type Props = {|
   +user: TodoList_user,
 |};
 
-const TodoList = ({
-  relay,
-  user,
-  user: {todos, totalCount, completedCount},
-}: Props) => {
+const TodoList = ({relay, user: userRef}: Props) => {
+  const user = useFragment(
+    graphql`
+      fragment TodoList_user on User {
+        todos(
+          first: 2147483647 # max GraphQLInt
+        ) @stream_connection(initialCount: 0, key: "TodoList_todos") {
+          edges {
+            node {
+              id
+              complete
+              ...Todo_todo
+            }
+          }
+        }
+        id
+        userId
+        totalCount
+        completedCount
+        ...Todo_user
+      }
+    `,
+    userRef,
+  );
+  const {todos, totalCount, completedCount} = user;
   const handleMarkAllChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const complete = e.currentTarget.checked;
 
@@ -68,25 +89,4 @@ const TodoList = ({
   );
 };
 
-export default createFragmentContainer(TodoList, {
-  user: graphql`
-    fragment TodoList_user on User {
-      todos(
-        first: 2147483647 # max GraphQLInt
-      ) @connection(key: "TodoList_todos") {
-        edges {
-          node {
-            id
-            complete
-            ...Todo_todo
-          }
-        }
-      }
-      id
-      userId
-      totalCount
-      completedCount
-      ...Todo_user
-    }
-  `,
-});
+export default TodoList;

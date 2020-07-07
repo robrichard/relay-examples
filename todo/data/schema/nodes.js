@@ -68,6 +68,13 @@ const GraphQLTodo = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLString),
       resolve: (todo: Todo): string => todo.text,
     },
+    slowField: {
+      type: GraphQLString,
+      resolve: async () => {
+        await new Promise(r => setTimeout(r, 2500));
+        return 'slow';
+      },
+    },
     complete: {
       type: new GraphQLNonNull(GraphQLBoolean),
       resolve: (todo: Todo): boolean => todo.complete,
@@ -103,13 +110,20 @@ const GraphQLUser = new GraphQLObjectType({
         ...connectionArgs,
       },
       // eslint-disable-next-line flowtype/require-parameter-type
-      resolve: (root: {}, {status, after, before, first, last}) =>
-        connectionFromArray([...getTodos(status)], {
+      resolve: (root: {}, {status, after, before, first, last}) => {
+        const result = connectionFromArray([...getTodos(status)], {
           after,
           before,
           first,
           last,
-        }),
+        });
+
+        result.edges = result.edges.map(async (edge, i) => {
+          await new Promise(r => setTimeout(r, (i + 1) * 1000));
+          return edge;
+        });
+        return result;
+      },
     },
     totalCount: {
       type: new GraphQLNonNull(GraphQLInt),

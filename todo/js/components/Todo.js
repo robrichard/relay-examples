@@ -15,11 +15,13 @@ import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation';
 import RemoveTodoMutation from '../mutations/RemoveTodoMutation';
 import RenameTodoMutation from '../mutations/RenameTodoMutation';
 import TodoTextInput from './TodoTextInput';
+import TodoSlowField from './TodoSlowField';
 
 import React, {useState} from 'react';
 import {createFragmentContainer, graphql, type RelayProp} from 'react-relay';
 import classnames from 'classnames';
 import type {Todo_todo} from 'relay/Todo_todo.graphql';
+import {useFragment} from 'react-relay/hooks';
 import type {Todo_user} from 'relay/Todo_user.graphql';
 
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -30,7 +32,29 @@ type Props = {|
   +user: Todo_user,
 |};
 
-const Todo = ({relay, todo, user}: Props) => {
+const Todo = ({relay, todo: todoRef, user: userRef}: Props) => {
+  const todo = useFragment(
+    graphql`
+      fragment Todo_todo on Todo {
+        ...TodoSlowField @defer
+        complete
+        id
+        text
+      }
+    `,
+    todoRef,
+  );
+  const user = useFragment(
+    graphql`
+      fragment Todo_user on User {
+        id
+        userId
+        totalCount
+        completedCount
+      }
+    `,
+    userRef,
+  );
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const handleCompleteChange = (e: SyntheticEvent<HTMLInputElement>) => {
@@ -69,7 +93,12 @@ const Todo = ({relay, todo, user}: Props) => {
           type="checkbox"
         />
 
-        <label onDoubleClick={handleLabelDoubleClick}>{todo.text}</label>
+        <label onDoubleClick={handleLabelDoubleClick}>
+          {todo.text}
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <TodoSlowField todo={todo} />
+          </React.Suspense>
+        </label>
         <button className="destroy" onClick={handleDestroyClick} />
       </div>
 
@@ -87,20 +116,4 @@ const Todo = ({relay, todo, user}: Props) => {
   );
 };
 
-export default createFragmentContainer(Todo, {
-  todo: graphql`
-    fragment Todo_todo on Todo {
-      complete
-      id
-      text
-    }
-  `,
-  user: graphql`
-    fragment Todo_user on User {
-      id
-      userId
-      totalCount
-      completedCount
-    }
-  `,
-});
+export default Todo;

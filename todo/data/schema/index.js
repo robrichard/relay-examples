@@ -45,4 +45,6 @@ const Mutation = new GraphQLObjectType({
 export const schema = new GraphQLSchema({
   query: Query,
   mutation: Mutation,
+  experimentalDefer: true,
+  experimentalStream: true,
 });
